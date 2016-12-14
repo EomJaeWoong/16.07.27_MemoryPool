@@ -7,9 +7,7 @@ class CStack
 public :
 	CStack(int MaxData)
 	{
-		_ptrStack = new DATA[MaxData];
-		_iTop = -1;
-		_iMaxData = MaxData;
+		Initial(MaxData);
 	}
 	~CStack(){}
 
@@ -19,6 +17,13 @@ private :
 	int _iMaxData;
 
 public :
+	void Initial(int MaxData)
+	{
+		_ptrStack = new DATA[MaxData];
+		_iTop = -1;
+		_iMaxData = MaxData;
+	}
+
 	bool Push(DATA data)
 	{
 		if (_iTop < _iMaxData){
