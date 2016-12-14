@@ -1,49 +1,73 @@
-#ifndef HEAD_STACK_H
-#define HEAD_STACK_H
+#ifndef __STACK__H__
+#define __STACK__H__
 
 template <class DATA>
 class CStack
 {
-public :
-	CStack(int MaxData)
+private :
+	struct st_STACK_NODE
 	{
-		Initial(MaxData);
+		DATA data;
+		st_STACK_NODE *stpNextNode;
+	};
+
+public :
+	CStack()
+	{
+		Initial();
 	}
-	~CStack(){}
+	~CStack()
+	{
+		DATA *pTemp;
+		for (int iCnt = 0; iCnt < _iStackCount; iCnt++)
+		{
+			
+		}
+	}
 
 private :
-	DATA *_ptrStack;
-	int _iTop;
-	int _iMaxData;
+	st_STACK_NODE *_iTop;
+	int _iStackCount;
 
 public :
-	void Initial(int MaxData)
+	void Initial()
 	{
-		_ptrStack = new DATA[MaxData];
-		_iTop = -1;
-		_iMaxData = MaxData;
+		_iTop = NULL;
+		_iStackCount = 0;
 	}
 
 	bool Push(DATA data)
 	{
-		if (_iTop < _iMaxData){
-			_ptrStack[++_iTop] = data;
-			return true;
-		}
-		return false;
+		st_STACK_NODE *stpNode = new st_STACK_NODE;
+		stpNode->data = data;
+
+		stpNode->stpNextNode = _iTop;
+
+		_iTop = stpNode;
+
+		_iStackCount++;
+
+		return true;
 	}
 
 	bool Pop(DATA *outData)
 	{
-		if (_iTop > -1){
-			*outData = _ptrStack[_iTop--];
-			return true;
-		}
-		return false;
+		st_STACK_NODE *stpNode;
+
+		if (_iStackCount == 0) return false;
+
+		stpNode = _iTop;
+		*outData = stpNode->data;
+
+		_iTop = stpNode->stpNextNode;
+
+		delete stpNode;
+
+		return true;
 	}
 
 	int GetDataSize(){
-		return _iTop + 1; 
+		return _iStackCount; 
 	}
 };
 
